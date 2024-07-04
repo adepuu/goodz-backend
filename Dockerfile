@@ -16,9 +16,9 @@ COPY application/pom.xml application/
 RUN mvn dependency:go-offline -B
 
 # Copy source files
-COPY domain/src domain/src
-COPY infrastructure/src infrastructure/src
-COPY application/src application/src
+COPY domain/src/ domain/src/
+COPY infrastructure/src/ infrastructure/src/
+COPY application/src/ application/src/
 
 # Build the application
 RUN mvn package -DskipTests
