@@ -1,7 +1,6 @@
 package com.goodz.backend.domain.context.element.common;
 
 public enum Profession {
-
   EMPLOYEE("profession_employee", 1),
   WORKER("profession_worker", 2),
   TRAINEE("profession_trainee", 3),

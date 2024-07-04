@@ -67,7 +67,6 @@ public class OrderServiceImpl implements OrderService {
 
   @Override
   public SingleOrderResponse processOrder(SubmitOrderRequest submitOrderRequest) throws NotFoundException {
-
     log.info("Process order - {}", submitOrderRequest);
     // Now I'm on the infrastructure layer, and I need to execute a business case.
     // Business is executed on the domain layer.
@@ -88,7 +87,6 @@ public class OrderServiceImpl implements OrderService {
     List<ProductEntity> productEntities = productRepository.getAllByIdIn(ids);
 
     log.info("products - {}", productEntities);
-
 
     Customer customer = customerMapper.toCustomer(customerEntity);
 
