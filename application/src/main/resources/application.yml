@@ -1,0 +1,23 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: ddd-application
+  ## Spring datasource config
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: admin
+    password:
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    open-in-view: false
+    defer-datasource-initialization: true
