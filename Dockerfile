@@ -28,8 +28,8 @@ FROM openjdk:22-slim
 
 WORKDIR /app
 
-# Copy the built artifact from the build stage and rename it to app.jar
-COPY --from=build /app/application/target/application-*.jar ./app.jar
+# Copy the built artifact from the build stage to the app directory
+COPY --from=build /app/application/target/app.jar /app/
 
 # Set the startup command to run your application
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
