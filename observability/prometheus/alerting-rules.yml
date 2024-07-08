@@ -2,7 +2,7 @@ groups:
   - name: service_alerts
     rules:
       - alert: ServiceIsDown
-        expr: up{application="Goodz Backend", instance="host.docker.internal:8080", job="MyAppMetrics"} == 0
+        expr: up{application="Goodz Backend", instance="host.docker.internal:8080", job="GoodzBackendMetrics"} == 0
         for: 1m
         labels:
           severity: critical
