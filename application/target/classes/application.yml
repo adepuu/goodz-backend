@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
 spring:
   application:
     name: ddd-application
@@ -21,3 +21,8 @@ spring:
     show-sql: true
     open-in-view: false
     defer-datasource-initialization: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ["prometheus"]
