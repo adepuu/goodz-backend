@@ -1,0 +1,12 @@
+apiVersion: 1
+dashboards:
+  - name: 'goodz-dashboard'
+    json_data:
+      timeInterval: '5m'
+    editable: true
+    orgId: 1
+    provider: 'default'
+    uid: 'abcd1234'
+    folderUid: ''
+    options:
+      path: /etc/grafana/provisioning/dashboards/default.json

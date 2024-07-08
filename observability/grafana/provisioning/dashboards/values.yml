@@ -1,37 +1,10 @@
-grafana:
-    dashboards:
-        default:
-            goodz-dashboard:
-                file: /etc/grafana/provisioning/dashboards/default.json
-
-    datasources:
-        datasources.yaml:
-            apiVersion: 1
-            datasources:
-                - name: Prometheus
-                  type: prometheus
-                  url: http://prometheus:9090
-                  access: proxy
-                  isDefault: true
-
-    dashboardProviders:
-        dashboardproviders.yaml:
-            apiVersion: 1
-            providers:
-                - name: 'default'
-                  orgId: 1
-                  folder: ''
-                  type: file
-                  disableDeletion: false
-                  editable: true
-                  options:
-                      path: /etc/grafana/provisioning/dashboards
-
-    dashboardsConfigMaps:
-        default: "goodz-dashboard-configmap"
-
-    extraConfigmapMounts:
-        - name: dashboards-configmap
-          mountPath: /etc/grafana/provisioning/dashboards
-          configMap: goodz-dashboard-configmap
-          readOnly: true
+apiVersion: 1
+providers:
+  - name: 'default'
+    orgId: 1
+    folder: ''
+    type: file
+    disableDeletion: false
+    editable: true
+    options:
+      path: /etc/grafana/provisioning/dashboards
