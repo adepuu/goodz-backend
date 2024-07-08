@@ -13,6 +13,7 @@ services:
             - "9090:9090"
         volumes:
             - ./observability/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+            - ./observability/prometheus/alerting-rules.yml:/etc/prometheus/alerting-rules.yml
     grafana:
         image: grafana/grafana:9.5.20
         container_name: grafana
@@ -21,3 +22,14 @@ services:
         restart: unless-stopped
         volumes:
             - ./observability/grafana/provisioning:/etc/grafana/provisioning
+    alertmanager:
+        image: bitnami/alertmanager:latest
+        ports:
+            - 9093:9093
+        volumes:
+            - ./observability/alert-manager/email-alert.yml:/opt/bitnami/alertmanager/conf/config.yml
+    mailhog:
+        image: mailhog/mailhog:v1.0.1
+        ports:
+            - 1025:1025
+            - 8025:8025

@@ -1,0 +1,47 @@
+groups:
+  - name: service_alerts
+    rules:
+      - alert: ServiceIsDown
+        expr: up{application="Goodz Backend", instance="host.docker.internal:8080", job="MyAppMetrics"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Service is down or not responding"
+          description: "The service {{ $labels.instance }} has not responding for 1 minutes, indicating it may be down."
+
+      - alert: High4xxErrorRate
+        expr: sum(rate(http_server_requests_seconds_count{status=~"4.."}[5m])) / sum(rate(http_server_requests_seconds_count[5m])) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High rate of 4xx errors"
+          description: "More than 5% of requests are resulting in 4xx errors over the last 5 minutes."
+
+      - alert: High5xxErrorRate
+        expr: sum(rate(http_server_requests_seconds_count{status=~"5.."}[5m])) / sum(rate(http_server_requests_seconds_count[5m])) > 0.01
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High rate of 5xx errors"
+          description: "More than 1% of requests are resulting in 5xx errors over the last 5 minutes."
+
+      - alert: Sudden4xxSpike
+        expr: sum(rate(http_server_requests_seconds_count{status=~"4.."}[5m])) > 10 * sum(rate(http_server_requests_seconds_count{status=~"4.."}[1h] offset 5m))
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Sudden spike in 4xx errors"
+          description: "The rate of 4xx errors in the last 5 minutes is 10 times higher than the rate in the previous hour."
+
+      - alert: Sudden5xxSpike
+        expr: sum(rate(http_server_requests_seconds_count{status=~"5.."}[5m])) > 5 * sum(rate(http_server_requests_seconds_count{status=~"5.."}[1h] offset 5m))
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Sudden spike in 5xx errors"
+          description: "The rate of 5xx errors in the last 5 minutes is 5 times higher than the rate in the previous hour."

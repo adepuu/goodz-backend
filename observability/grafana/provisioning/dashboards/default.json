@@ -722,6 +722,159 @@
       }
     },
     {
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 8
+      },
+      "id": 109,
+      "title": "HTTP Server Requests Count",
+      "targets": [
+        {
+          "expr": "sum by (method, status, uri) (http_server_requests_seconds_count{instance=\"$instance\", application=\"$application\", uri!=\"/actuator/prometheus\"})",
+          "legendFormat": "{{method}} [{{status}}] - {{uri}}",
+          "refId": "A"
+        }
+      ],
+      "type": "graph"
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 8
+      },
+      "id": 110,
+      "title": "HTTP Server Requests Sum",
+      "targets": [
+        {
+          "expr": "sum by (method, status, uri) (http_server_requests_seconds_sum{instance=\"$instance\", application=\"$application\", uri!=\"/actuator/prometheus\"})",
+          "legendFormat": "{{method}} [{{status}}] - {{uri}}",
+          "refId": "A"
+        }
+      ],
+      "type": "graph"
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 8
+      },
+      "id": 111,
+      "title": "HTTP Server Requests Max",
+      "targets": [
+        {
+          "expr": "max by (method, status, uri) (http_server_requests_seconds_max{instance=\"$instance\", application=\"$application\", uri!=\"/actuator/prometheus\"})",
+          "legendFormat": "{{method}} [{{status}}] - {{uri}}",
+          "refId": "A"
+        }
+      ],
+      "type": "graph"
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 9
+      },
+      "id": 112,
+      "title": "2xx Responses Count",
+      "targets": [
+        {
+          "expr": "sum(http_server_requests_seconds_count{instance=\"$instance\", application=\"$application\", status=~\"2..\", uri!=\"/actuator/prometheus\"}) by (method, status, uri)",
+          "legendFormat": "{{method}} [{{status}}] - {{uri}}",
+          "refId": "A"
+        }
+      ],
+      "type": "graph",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": "Count"
+        },
+        {
+          "format": "short",
+          "show": false
+        }
+      ]
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 9
+      },
+      "id": 113,
+      "title": "4xx Responses Count",
+      "targets": [
+        {
+          "expr": "sum(http_server_requests_seconds_count{instance=\"$instance\", application=\"$application\", status=~\"4..\", uri!=\"/actuator/prometheus\"}) by (method, status, uri)",
+          "legendFormat": "{{method}} [{{status}}] - {{uri}}",
+          "refId": "A"
+        }
+      ],
+      "type": "graph",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": "Count"
+        },
+        {
+          "format": "short",
+          "show": false
+        }
+      ]
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 9
+      },
+      "id": 114,
+      "title": "5xx Responses Count",
+      "targets": [
+        {
+          "expr": "sum(http_server_requests_seconds_count{instance=\"$instance\", application=\"$application\", status=~\"5..\", uri!=\"/actuator/prometheus\"}) by (method, status, uri)",
+          "legendFormat": "{{method}} [{{status}}] - {{uri}}",
+          "refId": "A"
+        }
+      ],
+      "type": "graph",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": "Count"
+        },
+        {
+          "format": "short",
+          "show": false
+        }
+      ]
+    },
+    {
       "collapsed": false,
       "datasource": "Prometheus",
       "gridPos": {
