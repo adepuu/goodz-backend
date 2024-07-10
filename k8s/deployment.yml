@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goodz-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: goodz-backend
+  template:
+    metadata:
+      labels:
+        app: goodz-backend
+    spec:
+      volumes:
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "gcp-postgres-secrets"
+      containers:
+        - name: goodz-backend
+          image: asia-southeast2-docker.pkg.dev/pro-icon-428103-v3/cloud-run-source-deploy/goodz-backend/goodz-backend
+          ports:
+            - containerPort: 8080
+          env:
+            - name: APP_PORT
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['APP_PORT']
+            - name: POSTGRES_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['POSTGRES_HOST']
+            - name: POSTGRES_PORT
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['POSTGRES_PORT']
+            - name: POSTGRES_DB
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['POSTGRES_DB']
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: gcp-postgres-secrets
+                  key: postgres-user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: gcp-postgres-secrets
+                  key: postgres-password
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
