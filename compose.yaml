@@ -1,11 +1,13 @@
 services:
     backend-app:
         container_name: goodz-backend
+        env_file:
+            -   .env
         build:
             context: .
             dockerfile: Dockerfile
         ports:
-            - "8080:8080"
+            - ${APP_PORT}:${APP_PORT}
     prometheus:
         image: prom/prometheus:v2.45.6
         container_name: prometheus
@@ -29,7 +31,7 @@ services:
         volumes:
             - ./observability/alert-manager/email-alert.yml:/opt/bitnami/alertmanager/conf/config.yml
     mailhog:
-        image: mailhog/mailhog:v1.0.1
+        image: mailhog/mailhog:latest
         ports:
             - 1025:1025
             - 8025:8025

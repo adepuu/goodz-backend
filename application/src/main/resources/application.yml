@@ -1,28 +1,24 @@
 server:
-  port: 8080
+  port: ${APP_PORT}
 spring:
   application:
-    name: ddd-application
+    name: goodz-ddd-application
   ## Spring datasource config
   datasource:
-    url: jdbc:h2:mem:testdb
-    username: admin
-    password:
-    driver-class-name: org.h2.Driver
-  h2:
-    console:
-      enabled: true
+    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: create-drop
     properties:
       hibernate:
         format_sql: true
-    show-sql: true
     open-in-view: false
-    defer-datasource-initialization: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
 management:
   endpoints:
     web:
       exposure:
-        include: ["*"]
+        include: ["prometheus", "health"]
