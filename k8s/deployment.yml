@@ -51,13 +51,13 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-password
-                  key: content
+                  name: goodz-secret
+                  key: postgres-password-content
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: postgres-user
-                  key: content
+                  name: goodz-secret
+                  key: postgres-user-content
           livenessProbe:
             httpGet:
               path: /actuator/health
