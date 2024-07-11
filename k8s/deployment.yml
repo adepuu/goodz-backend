@@ -22,32 +22,32 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: "POSTGRES_DB"
-                  name: "goodz-backend-test-config"
+                  name: "goodz-backend-config"
             - name: "POSTGRES_HOST"
               valueFrom:
                 configMapKeyRef:
                   key: "POSTGRES_HOST"
-                  name: "goodz-backend-test-config"
+                  name: "goodz-backend-config"
             - name: "POSTGRES_PASSWORD"
               valueFrom:
                 configMapKeyRef:
                   key: "POSTGRES_PASSWORD"
-                  name: "goodz-backend-test-config"
+                  name: "goodz-backend-config"
             - name: "POSTGRES_PORT"
               valueFrom:
                 configMapKeyRef:
                   key: "POSTGRES_PORT"
-                  name: "goodz-backend-test-config"
+                  name: "goodz-backend-config"
             - name: "POSTGRES_USER"
               valueFrom:
                 configMapKeyRef:
                   key: "POSTGRES_USER"
-                  name: "goodz-backend-test-config"
+                  name: "goodz-backend-config"
             - name: "APP_PORT"
               valueFrom:
                 configMapKeyRef:
                   key: "APP_PORT"
-                  name: "goodz-backend-test-config"
+                  name: "goodz-backend-config"
           livenessProbe:
             httpGet:
               path: /actuator/health
