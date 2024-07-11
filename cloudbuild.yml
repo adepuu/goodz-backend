@@ -1,10 +1,10 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', '${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/goodz-backend:${{ github.sha }}', '.' ]
+    args: ['build', '-t', '${_GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_SERVICE}/goodz-backend:${SHORT_SHA}', '.' ]
     id: 'Build Docker Image'
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', '${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}/goodz-backend:${{ github.sha }}']
+    args: ['push', '${_GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_SERVICE}/goodz-backend:${SHORT_SHA}']
     id: 'Push Docker Image'
 
   - name: 'google/cloud-sdk:latest'
@@ -16,5 +16,10 @@ steps:
         gcloud deploy apply --file deploy/pipeline.yaml --region=asia-southeast2
         gcloud deploy apply --file deploy/dev.yaml --region=asia-southeast2
         gcloud deploy releases create 'app-release-${SHORT_SHA}' --delivery-pipeline=goodz-gke-cicd-pipeline --region=asia-southeast2 --skaffold-file=skaffold.yml
+
 options:
   logging: CLOUD_LOGGING_ONLY
+
+substitutions:
+  _GAR_LOCATION: asia-southeast2
+  _SERVICE: goodz
