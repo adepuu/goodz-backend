@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: goodz-backend
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: goodz-backend
@@ -12,47 +12,42 @@ spec:
       labels:
         app: goodz-backend
     spec:
-      volumes:
-        - name: secrets-store-inline
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: "gcp-postgres-secrets"
       containers:
         - name: goodz-backend
           image: asia-southeast2-docker.pkg.dev/pro-icon-428103-v3/goodz-backend/goodz-backend:latest
           ports:
             - containerPort: 8080
           env:
-            - name: APP_PORT
+            - name: "POSTGRES_DB"
               valueFrom:
-                fieldRef:
-                  fieldPath: metadata.annotations['APP_PORT']
-            - name: POSTGRES_HOST
+                configMapKeyRef:
+                  key: "POSTGRES_DB"
+                  name: "goodz-backend-test-config"
+            - name: "POSTGRES_HOST"
               valueFrom:
-                fieldRef:
-                  fieldPath: metadata.annotations['POSTGRES_HOST']
-            - name: POSTGRES_PORT
+                configMapKeyRef:
+                  key: "POSTGRES_HOST"
+                  name: "goodz-backend-test-config"
+            - name: "POSTGRES_PASSWORD"
               valueFrom:
-                fieldRef:
-                  fieldPath: metadata.annotations['POSTGRES_PORT']
-            - name: POSTGRES_DB
+                configMapKeyRef:
+                  key: "POSTGRES_PASSWORD"
+                  name: "goodz-backend-test-config"
+            - name: "POSTGRES_PORT"
               valueFrom:
-                fieldRef:
-                  fieldPath: metadata.annotations['POSTGRES_DB']
-            - name: POSTGRES_USER
+                configMapKeyRef:
+                  key: "POSTGRES_PORT"
+                  name: "goodz-backend-test-config"
+            - name: "POSTGRES_USER"
               valueFrom:
-                secretKeyRef:
-                  name: gcp-postgres-secrets
-                  key: postgres-user
-            - name: POSTGRES_PASSWORD
+                configMapKeyRef:
+                  key: "POSTGRES_USER"
+                  name: "goodz-backend-test-config"
+            - name: "APP_PORT"
               valueFrom:
-                secretKeyRef:
-                  name: gcp-postgres-secrets
-                  key: postgres-password
-            - name: SPRING_DATASOURCE_URL
-              value: "jdbc:postgresql://$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)"
+                configMapKeyRef:
+                  key: "APP_PORT"
+                  name: "goodz-backend-test-config"
           livenessProbe:
             httpGet:
               path: /actuator/health
