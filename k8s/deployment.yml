@@ -21,7 +21,7 @@ spec:
               secretProviderClass: "gcp-postgres-secrets"
       containers:
         - name: goodz-backend
-          image: asia-southeast2-docker.pkg.dev/pro-icon-428103-v3/cloud-run-source-deploy/goodz-backend/goodz-backend
+          image: asia-southeast2-docker.pkg.dev/pro-icon-428103-v3/goodz-backend
           ports:
             - containerPort: 8080
           env:

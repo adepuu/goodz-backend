@@ -1,0 +1,18 @@
+apiVersion: deploy.cloud.google.com/v1
+kind: DeliveryPipeline
+metadata:
+  name: goodz-gke-cicd-pipeline
+  labels:
+    app: cicd
+description: goodz cicd delivery pipeline
+serialPipeline:
+  stages:
+    - targetId: dev
+      # profiles:
+      # - dev.yml
+    # - targetId: staging
+    #   profiles:
+    #   - staging
+#    - targetId: prod
+  #   profiles:
+  #   - prod

@@ -1,0 +1,13 @@
+apiVersion: skaffold/v4beta9
+kind: Config
+build:
+  tagPolicy:
+    gitCommit: {}
+  local: {}
+manifests:
+  rawYaml:
+    - ./k8s/*
+deploy:
+  kubectl: {}
+  logs:
+    prefix: container
