@@ -12,6 +12,13 @@ spec:
       labels:
         app: goodz-backend
     spec:
+      volumes:
+        - name: mysecret
+          csi:
+            driver: secrets-store-gke.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: goodz-secret-provider
       serviceAccountName: build-robot
       nodeSelector:
         iam.gke.io/gke-metadata-server-enabled: "true"
@@ -45,12 +52,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: postgres-password
-                  key: latest
+                  key: content
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
                   name: postgres-user
-                  key: latest
+                  key: content
           livenessProbe:
             httpGet:
               path: /actuator/health
