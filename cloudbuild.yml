@@ -22,4 +22,4 @@ options:
 
 substitutions:
   _GAR_LOCATION: asia-southeast2
-  _SERVICE: goodz
+  _SERVICE: goodz-backend
