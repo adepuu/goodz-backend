@@ -13,6 +13,8 @@ spec:
         app: goodz-backend
     spec:
       serviceAccountName: build-robot
+      nodeSelector:
+        iam.gke.io/gke-metadata-server-enabled: "true"
       initContainers:
         - name: secret-injector
           image: asia-southeast2-docker.pkg.dev/pro-icon-428103-v3/secret-injector/secret-injector:latest
@@ -59,13 +61,13 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: secrets
-                  key: postgres_password
+                  name: projects/744725344198/secrets/POSTGRES_PASSWORD
+                  key: POSTGRES_PASSWORD
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: secrets
-                  key: postgres_user
+                  name: projects/744725344198/secrets/POSTGRES_USER
+                  key: POSTGRES_USER
           livenessProbe:
             httpGet:
               path: /actuator/health
