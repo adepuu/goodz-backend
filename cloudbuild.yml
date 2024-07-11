@@ -1,10 +1,11 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'asia-southeast2-docker.pkg.dev/pro-icon-428103-v3/goodz-backend', '.' ]
+    args: ['build', '-t', 'gcr.io/pro-icon-428103-v3/goodz-backend', '.' ]
     id: 'Build Docker Image'
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'asia-southeast2-docker.pkg.dev/pro-icon-428103-v3/goodz-backend' ]
+    args: ['push', 'gcr.io/pro-icon-428103-v3/goodz-backend']
+
     id: 'Push Docker Image'
 
   - name: 'google/cloud-sdk:latest'
