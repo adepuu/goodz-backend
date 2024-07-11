@@ -1,11 +1,19 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', '${_GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_SERVICE}/goodz-backend:${SHORT_SHA}', '.' ]
+    args: ['build', '-t', '${_GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_SERVICE}/${_SERVICE}:${SHORT_SHA}', '.' ]
     id: 'Build Docker Image'
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', '${_GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_SERVICE}/goodz-backend:${SHORT_SHA}']
+    args: ['push', '${_GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_SERVICE}/${_SERVICE}:${SHORT_SHA}']
     id: 'Push Docker Image'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'build', '-t', '${_GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_SECRET_SERVICE}/${_SECRET_SERVICE}:${SHORT_SHA}', '-f', '-f Dockerfile.secrets', '.' ]
+    id: 'Build Secret Service Docker Image'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'push', '${_GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_SECRET_SERVICE}/${_SECRET_SERVICE}:${SHORT_SHA}' ]
+    id: 'Push Secret Service Docker Image'
 
   - name: 'google/cloud-sdk:latest'
     entrypoint: 'sh'
@@ -23,3 +31,4 @@ options:
 substitutions:
   _GAR_LOCATION: asia-southeast2
   _SERVICE: goodz-backend
+  _SECRET_SERVICE: secret-injector

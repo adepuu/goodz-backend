@@ -12,8 +12,31 @@ spec:
       labels:
         app: goodz-backend
     spec:
+      initContainers:
+        - name: secret-injector
+          image: asia-southeast2-docker.pkg.dev/pro-icon-428103-v3/secret-injector/secret-injector:latest
+          command:
+            - "sh"
+            - "-c"
+            - "get-secrets.sh"
+          env:
+            - name: POSTGRES_USER_VERSION
+              value: "latest"
+            - name: POSTGRES_PASSWORD_VERSION
+              value: "latest"
+          volumeMounts:
+            - name: secrets
+              mountPath: "/secrets"
+      volumes:
+        - name: secrets
+          emptyDir: {}
       containers:
         - name: goodz-backend
+          volumeMounts:
+            - mountPath: "/app/secrets.yml"
+              name: secrets
+              readOnly: true
+              subPath: "secrets.yml"
           image: asia-southeast2-docker.pkg.dev/pro-icon-428103-v3/goodz-backend/goodz-backend:latest
           ports:
             - containerPort: 8080
@@ -28,26 +51,26 @@ spec:
                 configMapKeyRef:
                   key: "POSTGRES_HOST"
                   name: "goodz-backend-config"
-            - name: "POSTGRES_PASSWORD"
-              valueFrom:
-                configMapKeyRef:
-                  key: "POSTGRES_PASSWORD"
-                  name: "goodz-backend-config"
             - name: "POSTGRES_PORT"
               valueFrom:
                 configMapKeyRef:
                   key: "POSTGRES_PORT"
-                  name: "goodz-backend-config"
-            - name: "POSTGRES_USER"
-              valueFrom:
-                configMapKeyRef:
-                  key: "POSTGRES_USER"
                   name: "goodz-backend-config"
             - name: "APP_PORT"
               valueFrom:
                 configMapKeyRef:
                   key: "APP_PORT"
                   name: "goodz-backend-config"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: postgres_password
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: postgres_user
           livenessProbe:
             httpGet:
               path: /actuator/health
