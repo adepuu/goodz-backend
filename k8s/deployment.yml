@@ -61,12 +61,12 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: projects/744725344198/secrets/POSTGRES_PASSWORD
+                  name: projects/744725344198/secrets
                   key: POSTGRES_PASSWORD
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: projects/744725344198/secrets/POSTGRES_USER
+                  name: projects/744725344198/secrets
                   key: POSTGRES_USER
           livenessProbe:
             httpGet:
