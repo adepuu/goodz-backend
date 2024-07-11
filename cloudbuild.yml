@@ -13,9 +13,8 @@ steps:
       - -xe
       - -c
       - |
-        gcloud deploy apply --file deploy/pipeline.yaml --region=us-central1
-        gcloud deploy apply --file deploy/dev.yaml --region=us-central1
+        gcloud deploy apply --file deploy/pipeline.yaml --region=asia-southeast2
+        gcloud deploy apply --file deploy/dev.yaml --region=asia-southeast2
         gcloud deploy releases create 'app-release-${SHORT_SHA}' --delivery-pipeline=goodz-gke-cicd-pipeline --region=asia-southeast2 --skaffold-file=skaffold.yml
-
 options:
   logging: CLOUD_LOGGING_ONLY
