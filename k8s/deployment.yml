@@ -18,7 +18,7 @@ spec:
           command:
             - "sh"
             - "-c"
-            - "get-secrets.sh"
+            - "/get-secrets.sh"
           env:
             - name: POSTGRES_USER_VERSION
               value: "latest"
