@@ -44,12 +44,12 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres_password
+                  name: postgres-password
                   key: latest
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: postgres_user
+                  name: postgres-user
                   key: latest
           livenessProbe:
             httpGet:
