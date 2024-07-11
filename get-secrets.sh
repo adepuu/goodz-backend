@@ -1,5 +1,4 @@
 #!/bin/bash
-ECHO "Fetching secrets..."
 rm -rf ./secrets
 mkdir ./secrets
 cat > ./secrets/secrets.yml <<EOF
@@ -10,4 +9,3 @@ secrets:
   postgres_password: "`gcloud secrets versions access latest --secret=POSTGRES_PASSWORD`"
   postgres_user: "`gcloud secrets versions access latest --secret=POSTGRES_USER`"
 EOF
-ECHO "Secrets Created!"
