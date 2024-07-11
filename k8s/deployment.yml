@@ -15,25 +15,8 @@ spec:
       serviceAccountName: build-robot
       nodeSelector:
         iam.gke.io/gke-metadata-server-enabled: "true"
-      initContainers:
-        - name: secret-injector
-          image: asia-southeast2-docker.pkg.dev/pro-icon-428103-v3/secret-injector/secret-injector:latest
-          command:
-            - "sh"
-            - "/get-secrets.sh"
-          volumeMounts:
-            - name: secrets
-              mountPath: "/secrets"
-      volumes:
-        - name: secrets
-          emptyDir: {}
       containers:
         - name: goodz-backend
-          volumeMounts:
-            - mountPath: "/app/secrets.yml"
-              name: secrets
-              readOnly: true
-              subPath: "secrets.yml"
           image: asia-southeast2-docker.pkg.dev/pro-icon-428103-v3/goodz-backend/goodz-backend:latest
           ports:
             - containerPort: 8080
@@ -61,13 +44,13 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: projects/744725344198/secrets
-                  key: POSTGRES_PASSWORD
+                  name: postgres_password
+                  key: latest
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: projects/744725344198/secrets
-                  key: POSTGRES_USER
+                  name: postgres_user
+                  key: latest
           livenessProbe:
             httpGet:
               path: /actuator/health
