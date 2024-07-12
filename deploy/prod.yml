@@ -1,0 +1,9 @@
+apiVersion: deploy.cloud.google.com/v1
+kind: Target
+metadata:
+  name: dev
+  annotations: {}
+  labels: {}
+description: dev
+gke:
+  cluster: projects/pro-icon-428103-v3/locations/asia-southeast2/clusters/goodz

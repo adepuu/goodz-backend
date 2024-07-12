@@ -7,14 +7,6 @@ steps:
     args: ['push', '${_GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_SERVICE}/${_SERVICE}:latest']
     id: 'Push Docker Image'
 
-  - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', '${_GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_SECRET_SERVICE}/${_SECRET_SERVICE}:latest', '-f', 'Dockerfile.secrets', '.' ]
-    id: 'Build Secret Service Docker Image'
-
-  - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'push', '${_GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_SECRET_SERVICE}/${_SECRET_SERVICE}:latest' ]
-    id: 'Push Secret Service Docker Image'
-
   - name: 'google/cloud-sdk:latest'
     entrypoint: 'sh'
     args:

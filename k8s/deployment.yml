@@ -67,7 +67,6 @@ spec:
               path: /actuator/health/readiness
               scheme: HTTP
             initialDelaySeconds: 60
-            periodSeconds: 5
             successThreshold: 1
             failureThreshold: 5
             timeoutSeconds: 30
