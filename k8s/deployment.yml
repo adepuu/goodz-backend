@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: goodz-backend
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: goodz-backend
@@ -55,13 +55,13 @@ spec:
             httpGet:
               path: /actuator/health
               port: 8080
-            initialDelaySeconds: 10
+            initialDelaySeconds: 20
             periodSeconds: 5
           readinessProbe:
             httpGet:
               path: /actuator/health
               port: 8080
-            initialDelaySeconds: 5
+            initialDelaySeconds: 10
             periodSeconds: 5
           resources:
             requests:
