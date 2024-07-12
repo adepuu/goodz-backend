@@ -52,19 +52,25 @@ spec:
                   key: "POSTGRES_USER"
                   name: "goodz-backend-config"
           livenessProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 5
+            successThreshold: 1
             failureThreshold: 5
-            httpGet:
-              path: /actuator/health
-              port: 8080
-            initialDelaySeconds: 20
-            periodSeconds: 5
+            timeoutSeconds: 30
           readinessProbe:
-            failureThreshold: 3
             httpGet:
-              path: /actuator/health
               port: 8080
-            initialDelaySeconds: 10
+              path: /actuator/health
+              scheme: HTTP
+            initialDelaySeconds: 60
             periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 5
+            timeoutSeconds: 30
           resources:
             requests:
               memory: "512Mi"
