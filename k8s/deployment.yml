@@ -54,7 +54,7 @@ spec:
           livenessProbe:
             httpGet:
               port: 8080
-              path: /actuator/health
+              path: /actuator/health/liveness
               scheme: HTTP
             initialDelaySeconds: 60
             periodSeconds: 5
@@ -64,7 +64,7 @@ spec:
           readinessProbe:
             httpGet:
               port: 8080
-              path: /actuator/health
+              path: /actuator/health/readiness
               scheme: HTTP
             initialDelaySeconds: 60
             periodSeconds: 5
