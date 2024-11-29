@@ -1,4 +1,12 @@
 services:
+    postgres:
+        container_name: goodz-backend-main-db
+        image: postgres:alpine
+        restart: always
+        env_file:
+            - .env
+        ports:
+            - ${POSTGRES_PORT}:5432
     backend-app:
         container_name: goodz-backend
         env_file:
