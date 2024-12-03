@@ -13,7 +13,8 @@ import lombok.*;
 @Table(name = "LINE_ITEM")
 public class LineItemEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "line_item_id_gen")
+  @SequenceGenerator(name = "line_item_id_gen", sequenceName = "line_item_id_seq", allocationSize = 1)
   private Long id;
 
   private String note;

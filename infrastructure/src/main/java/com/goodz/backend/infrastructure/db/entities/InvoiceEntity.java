@@ -17,7 +17,8 @@ import java.time.LocalDateTime;
 @Table(name = "INVOICE")
 public class InvoiceEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "invoice_id_gen")
+  @SequenceGenerator(name = "invoice_id_gen", sequenceName = "invoice_id_seq", allocationSize = 1)
   private Long id;
 
 

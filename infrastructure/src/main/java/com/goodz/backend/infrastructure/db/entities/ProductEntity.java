@@ -21,7 +21,8 @@ import java.time.LocalDateTime;
 @Table(name = "PRODUCT")
 public class ProductEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_id_gen")
+  @SequenceGenerator(name = "product_id_gen", sequenceName = "product_id_seq", allocationSize = 1)
   private Long id;
 
   private String name;

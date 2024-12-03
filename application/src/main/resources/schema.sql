@@ -1,6 +1,6 @@
 CREATE TABLE address
 (
-    id                 BIGINT                                    NOT NULL,
+    id                 BIGSERIAL                                    NOT NULL,
     flat_number        VARCHAR(255),
     street             VARCHAR(255),
     postal_code        VARCHAR(255),
@@ -14,7 +14,7 @@ CREATE TABLE address
 
 CREATE TABLE customer
 (
-    id                 BIGINT                                    NOT NULL,
+    id                 BIGSERIAL                                    NOT NULL,
     display_name       VARCHAR(255),
     first_name         VARCHAR(255),
     last_name          VARCHAR(255),
@@ -27,7 +27,7 @@ CREATE TABLE customer
 
 CREATE TABLE invoice
 (
-    id                 BIGINT                                    NOT NULL,
+    id                 BIGSERIAL                                    NOT NULL,
     customer           BIGINT,
     creation_timestamp TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW() NOT NULL,
     update_timestamp   TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW() NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE invoice
 
 CREATE TABLE line_item
 (
-    id             BIGINT NOT NULL,
+    id             BIGSERIAL NOT NULL,
     note           VARCHAR(255),
     customer_order BIGINT,
     product        BIGINT,
@@ -46,7 +46,7 @@ CREATE TABLE line_item
 
 CREATE TABLE customer_order
 (
-    id                 BIGINT                                    NOT NULL,
+    id                 BIGSERIAL                                    NOT NULL,
     status             VARCHAR(255),
     payment            DECIMAL,
     creation_timestamp TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW() NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE customer_order
 
 CREATE TABLE payment
 (
-    id                 BIGINT                                    NOT NULL,
+    id                 BIGSERIAL                                    NOT NULL,
     customer           BIGINT,
     creation_timestamp TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW() NOT NULL,
     update_timestamp   TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW() NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE payment
 
 CREATE TABLE product
 (
-    id                 BIGINT                                    NOT NULL,
+    id                 BIGSERIAL                                    NOT NULL,
     name               VARCHAR(255),
     company            VARCHAR(255),
     quantity           INTEGER,
@@ -77,7 +77,7 @@ CREATE TABLE product
 
 CREATE TABLE shipping
 (
-    id                 BIGINT                                    NOT NULL,
+    id                 BIGSERIAL                                    NOT NULL,
     order_id           BIGINT,
     address            BIGINT,
     note               VARCHAR(255),

@@ -18,7 +18,8 @@ import java.time.LocalDateTime;
 @Table(name = "ADDRESS")
 public class AddressEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_id_gen")
+  @SequenceGenerator(name = "address_id_gen", sequenceName = "address_id_seq", allocationSize = 1)
   private Long id;
 
   private String flatNumber;

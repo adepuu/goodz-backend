@@ -22,7 +22,8 @@ import java.util.List;
 @Table(name = "CUSTOMER_ORDER")
 public class OrderEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_order_id_gen")
+  @SequenceGenerator(name = "customer_order_id_gen", sequenceName = "customer_order_id_seq", allocationSize = 1)
   private Long id;
 
 
